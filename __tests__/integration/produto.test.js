@@ -76,7 +76,6 @@ describe('PUT /api/produtos', () => {
     const response = await request(app)
       .patch(`/api/produtos/${product.id}`)
       .send({ nome });
-    console.error(product)
     expect(response.status).toBe(200);
   });
 
