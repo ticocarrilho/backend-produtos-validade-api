@@ -52,6 +52,21 @@ describe('POST /api/produtos', () => {
       .send({ ...produtoInfo, nome: '' });
     expect(response.status).toBe(400);
   });
+
+  it('should return 400 when trying to post a product with date previous from today', async () => {
+    const date = new Date(1989, 10, 2);
+    const response = await request(app)
+      .post('/api/produtos')
+      .send({ ...produtoInfo, validade: date.toString() });
+    expect(response.status).toBe(400);
+  });
+
+  it('should return 400 when trying to post a product with price less than 1', async () => {
+    const response = await request(app)
+      .post('/api/produtos')
+      .send({ ...produtoInfo, preco: 0 });
+    expect(response.status).toBe(400);
+  });
 });
 
 describe('PUT /api/produtos', () => {
@@ -61,7 +76,7 @@ describe('PUT /api/produtos', () => {
     const response = await request(app)
       .patch(`/api/produtos/${product.id}`)
       .send({ nome });
-    expect(response.body.nome).toBe(nome);
+    expect(response.status).toBe(200);
   });
 
   it('should return 404 when trying to update a product that does not exists', async () => {
@@ -79,19 +94,36 @@ describe('PUT /api/produtos', () => {
       .send({ nome: '' });
     expect(response.status).toBe(400);
   });
+
+  it('should return 400 when trying to update a product with date previous from today', async () => {
+    const product = await factory.create('Produto');
+    const date = new Date(1989, 10, 2);
+    const response = await request(app)
+      .patch(`/api/produtos/${product.id}`)
+      .send({ validade: date.toString() });
+    expect(response.status).toBe(400);
+  });
+
+  it('should return 400 when trying to update a product with price less than 1', async () => {
+    const product = await factory.create('Produto');
+    const response = await request(app)
+      .patch(`/api/produtos/${product.id}`)
+      .send({ ...produtoInfo, preco: 0 });
+    expect(response.status).toBe(400);
+  });
 });
 
 describe('DELETE /api/produtos/:id', () => {
   it('should be able to delete an existing product by id', async () => {
     const product = await factory.create('Produto');
-    const response = await request(app).delete(`/api/patients/${product.id}`);
-    expect(response.status).toBe(204);
+    const response = await request(app).delete(`/api/produtos/${product.id}`);
+    expect(response.status).toBe(200);
   });
 
-  it('should return 404 when trying to update a non-existing patient', async () => {
+  it('should return 404 when trying to update a product that does not exists', async () => {
     const product = await factory.create('Produto');
     const response = await request(app).delete(
-      `/api/patients/${product.id + 1}`
+      `/api/produtos/${product.id + 1}`
     );
     expect(response.status).toBe(404);
   });
