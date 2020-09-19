@@ -17,6 +17,12 @@ class AppController {
     if (process.env.NODE_ENV === 'development') {
       this.express.use(cors());
     }
+    else if(process.env.NODE_ENV === 'production') {
+      this.express.use(cors({
+        origin: 'https://angular-produtos.herokuapp.com',
+        optionsSuccessStatus: 200
+      }));
+    }
   }
 
   routes() {
