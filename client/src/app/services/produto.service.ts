@@ -17,6 +17,7 @@ export class ProdutoService {
       map((produtos: Produto[]) => {
         produtos.map((produto: Produto) => {
           produto.validade = new Date(moment.tz(produto.validade, "America/Recife").format());
+          return produto;
         });
         return produtos;
       })
