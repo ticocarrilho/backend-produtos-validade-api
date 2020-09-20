@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ProdutoService } from './produto.service';
+import { ProdutoService } from './services/produto.service';
+import { Produto } from './produto';
 
 @Component({
   selector: 'app-root',
@@ -7,10 +8,11 @@ import { ProdutoService } from './produto.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  produtos: Produto[];
   title = 'produtos-api';
   constructor(private produtoService: ProdutoService) {}
 
   ngOnInit(): void{
-    this.produtoService.getProdutos().subscribe(res => console.log(res))
+    this.produtoService.getProdutos().subscribe(res => this.produtos = res)
   }
 }
