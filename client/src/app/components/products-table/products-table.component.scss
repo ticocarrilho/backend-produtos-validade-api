@@ -1,5 +1,5 @@
 .table-container {
-  max-height: 400px;
+  max-height: 600px;
   overflow: auto;
 }
 table {
@@ -54,4 +54,12 @@ fa-icon {
 .validade--proxima {
   color: red;
   font-weight: 800;
+}
+
+.produto--expirado {
+  text-decoration-line: line-through;
+}
+
+mat-spinner {
+  margin: 15px auto 15px auto;
 }
