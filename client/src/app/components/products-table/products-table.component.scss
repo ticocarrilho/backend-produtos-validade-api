@@ -1,0 +1,39 @@
+.table-container {
+  max-height: 400px;
+  overflow: auto;
+}
+table {
+  width: 100%;
+}
+mat-header-cell {
+  background-color: #2581d5;
+  color: white;
+  font-weight: 800;
+  padding-right: 6px;
+  &:not(:first-child) {
+    padding-left: 16px;
+  }
+}
+mat-row{
+  align-items: stretch;
+  &:nth-child(odd) {
+    background-color: #ebf1fe;
+  }
+}
+
+mat-cell {
+  padding-right: 6px;
+  &:not(:first-child) {
+    border-left: 1px solid rgba(0, 0, 0, 0.12);
+    padding-left: 16px;
+  }
+}
+
+fa-icon {
+  margin-right: 6px;
+}
+
+.button--sm {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
