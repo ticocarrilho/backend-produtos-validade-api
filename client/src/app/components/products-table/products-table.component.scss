@@ -15,7 +15,7 @@ mat-header-cell {
   }
   &:last-child{
     @media (max-width: 768px) {
-      flex: 1.15;
+      padding-left: 6px;
     }
   }
 }
@@ -37,7 +37,7 @@ mat-cell {
   }
   &:last-child{
     @media (max-width: 768px) {
-      flex: 1.15;
+      padding-left: 6px;
     }
   }
 }
