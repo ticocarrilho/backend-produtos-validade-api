@@ -1,3 +1,5 @@
 <div class="container">
-  <app-products-table [produtos]="produtos"></app-products-table>
+  <div *ngIf="produtos">
+    <app-products-table [produtos]="produtos"></app-products-table>
+  </div>
 </div>

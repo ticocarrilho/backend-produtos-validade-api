@@ -13,6 +13,11 @@ mat-header-cell {
   &:not(:first-child) {
     padding-left: 16px;
   }
+  &:last-child{
+    @media (max-width: 768px) {
+      flex: 1.15;
+    }
+  }
 }
 mat-row{
   align-items: stretch;
@@ -23,9 +28,17 @@ mat-row{
 
 mat-cell {
   padding-right: 6px;
+  word-break: break-word;
   &:not(:first-child) {
     border-left: 1px solid rgba(0, 0, 0, 0.12);
-    padding-left: 16px;
+    @media (min-width: 768px) { 
+      padding-left: 16px;
+    }
+  }
+  &:last-child{
+    @media (max-width: 768px) {
+      flex: 1.15;
+    }
   }
 }
 
@@ -36,4 +49,9 @@ fa-icon {
 .button--sm {
   margin-top: 8px;
   margin-bottom: 8px;
+}
+
+.validade--proxima {
+  color: red;
+  font-weight: 800;
 }
