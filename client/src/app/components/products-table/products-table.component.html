@@ -14,7 +14,7 @@
 
     <ng-container matColumnDef="validade">
       <mat-header-cell *matHeaderCellDef>Validade</mat-header-cell>
-      <mat-cell *matCellDef="let produto">{{
+      <mat-cell *matCellDef="let produto" [ngClass]="{'validade--proxima' : isExpirationNear(produto)}">{{
         produto.validade | date: "shortDate"
       }}</mat-cell>
     </ng-container>
