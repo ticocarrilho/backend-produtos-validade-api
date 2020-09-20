@@ -16,6 +16,9 @@ module.exports = {
     body('validade')
       .notEmpty()
       .withMessage('A validade não pode estar vazia.')
+      .isDate()
+      .withMessage('Insira um formato de data válido.')
+      .bail()
       .custom(value => {
         const validade = moment.tz(value, 'America/Recife');
         const today = moment.now();
@@ -40,6 +43,9 @@ module.exports = {
       .optional()
       .notEmpty()
       .withMessage('A validade não pode estar vazia.')
+      .isDate()
+      .withMessage('Insira um formato de data válido.')
+      .bail()
       .custom(value => {
         const validade = moment.tz(value, 'America/Recife');
         const today = moment.now();
