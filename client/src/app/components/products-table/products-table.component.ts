@@ -3,8 +3,10 @@ import * as moment from 'moment';
 import { Produto } from '../../produto';
 import { faPen, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { ProdutoService } from '../../services/produto.service';
+import { DeleteProdDialogComponent } from '../delete-prod-dialog/delete-prod-dialog.component';
 
 @Component({
   selector: 'app-products-table',
@@ -18,9 +20,11 @@ export class ProductsTableComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   faPen = faPen;
   faTrash = faTrashAlt;
-  
 
-  constructor(private produtoService: ProdutoService) {}
+  constructor(
+    private produtoService: ProdutoService,
+    public deleteDialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.showSpinner = true;
@@ -29,6 +33,18 @@ export class ProductsTableComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
       this.showSpinner = false;
     });
+  }
+
+  deleteProduto(produto: Produto): void {
+    const dialogRef = this.deleteDialog.open(DeleteProdDialogComponent, {
+      width: '400px',
+      data: produto
+    })
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+        this.produtoService.deleteProduto(produto);
+      }
+    })
   }
 
   isExpired(produto: Produto): boolean {
