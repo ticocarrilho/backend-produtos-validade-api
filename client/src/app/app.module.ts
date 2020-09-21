@@ -14,6 +14,7 @@ import {
   MatPaginatorIntl,
 } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -31,6 +32,7 @@ import { ProductsTableComponent } from './components/products-table/products-tab
 import { SortValidadePipe } from './pipes/sort-validade.pipe';
 import { ConvertDatePipe } from './pipes/convert-date.pipe';
 import { ProductInputComponent } from './components/product-input/product-input.component';
+import { DeleteProdDialogComponent } from './components/delete-prod-dialog/delete-prod-dialog.component';
 import { getPortuguesePaginatorIntl } from './getPortuguesePaginatorIntl';
 
 registerLocaleData(localePt);
@@ -52,6 +54,7 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
     SortValidadePipe,
     ConvertDatePipe,
     ProductInputComponent,
+    DeleteProdDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -65,6 +68,7 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
     MatSnackBarModule,
     MatDatepickerModule,
     MatMomentDateModule,
+    MatDialogModule,
     MatInputModule,
     CurrencyMaskModule,
     MatPaginatorModule,

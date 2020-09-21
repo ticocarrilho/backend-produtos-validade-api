@@ -11,8 +11,8 @@ module.exports = {
     if (!product) {
       return res.status(404).json({ message: 'Produto não encontrado.' });
     }
-    const { nome, preco, validade } = product;
-    res.json({ nome, preco, validade });
+    const { id, nome, preco, validade } = product;
+    res.json({ id, nome, preco, validade });
   },
   async store(req, res) {
     const { nome, preco, validade } = req.body;

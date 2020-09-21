@@ -34,6 +34,15 @@ export class ProdutoService {
     return produtoResult.asObservable();
   }
 
+  deleteProduto(produto: Produto): Observable<Produto[]> {
+    this.http
+      .delete<Produto>(`${environment.apiUrl}/${produto.id}`)
+      .subscribe(() => {
+        this.produtos.next(this.produtos.getValue().filter((prod: Produto) => prod.id !== produto.id))
+      });
+    return this.sharedProdutos;
+  }
+
   getProdutos(): Observable<Produto[]> {
     this.http
       .get<Produto[]>(environment.apiUrl)

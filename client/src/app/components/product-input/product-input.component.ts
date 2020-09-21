@@ -42,12 +42,18 @@ export class ProductInputComponent implements OnInit {
     });
   }
 
-  onSubmit(produtoInfo: Produto) {
-    let produto: Produto = produtoInfo;
+  onSubmit(produto: Produto) {
     this.produtoService.addProduto(produto).subscribe((res: Produto) => {
       this.formGroupDirective.resetForm();
-      this.snackBar.open('Produto criado com sucesso.', 'Desfazer', {
-        duration: 3000,
+      const snackBarRef = this.snackBar.open(
+        'Produto criado com sucesso.',
+        'Desfazer',
+        {
+          duration: 3000,
+        }
+      );
+      snackBarRef.onAction().subscribe(() => {
+        this.produtoService.deleteProduto(res);
       });
     });
   }
