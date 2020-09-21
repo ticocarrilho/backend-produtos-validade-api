@@ -21,7 +21,10 @@ export class ProductInputComponent implements OnInit {
   @ViewChild(FormGroupDirective) formGroupDirective: FormGroupDirective;
   nomeFormControl = new FormControl('', [Validators.required]);
 
-  precoFormControl = new FormControl(null, [Validators.required]);
+  precoFormControl = new FormControl(null, [
+    Validators.required,
+    Validators.min(1.0),
+  ]);
 
   validadeFormControl = new FormControl('', [Validators.required]);
 
@@ -40,13 +43,14 @@ export class ProductInputComponent implements OnInit {
   }
 
   onSubmit(produtoInfo: Produto) {
-    let produto: Produto = produtoInfo;
-    this.produtoService.addProduto(produto).subscribe((res: Produto) => {
-      this.formGroupDirective.resetForm();
-      this.snackBar.open('Produto criado com sucesso.', 'Desfazer', {
-        duration: 3000,
-      });
-    });
+    console.log(this.validadeFormControl);
+    // let produto: Produto = produtoInfo;
+    // this.produtoService.addProduto(produto).subscribe((res: Produto) => {
+    //   this.formGroupDirective.resetForm();
+    //   this.snackBar.open('Produto criado com sucesso.', 'Desfazer', {
+    //     duration: 3000,
+    //   });
+    // });
   }
 
   ngOnInit(): void {}

@@ -18,7 +18,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import {
   CurrencyMaskConfig,
@@ -64,7 +64,7 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
     MatFormFieldModule,
     MatSnackBarModule,
     MatDatepickerModule,
-    MatNativeDateModule,
+    MatMomentDateModule,
     MatInputModule,
     CurrencyMaskModule,
     MatPaginatorModule,
@@ -73,7 +73,7 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
     MatProgressSpinnerModule,
   ],
   providers: [
-    { provide: LOCALE_ID, useValue: 'pt-Br' },
+    { provide: LOCALE_ID, useValue: 'pt' },
     { provide: CURRENCY_MASK_CONFIG, useValue: CustomCurrencyMaskConfig },
     { provide: MatPaginatorIntl, useValue: getPortuguesePaginatorIntl() },
     SortValidadePipe,

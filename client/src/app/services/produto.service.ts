@@ -26,11 +26,9 @@ export class ProdutoService {
     this.http
       .post<Produto>(environment.apiUrl, produto)
       .subscribe((res: Produto) => {
-        produtoResult.next(res)
-        const newProdutos =  [...this.produtos.getValue(), res]
-        const dateConvertPipe = this.convertDate.transform(
-          newProdutos
-        );
+        produtoResult.next(res);
+        const newProdutos = [...this.produtos.getValue(), res];
+        const dateConvertPipe = this.convertDate.transform(newProdutos);
         this.produtos.next(this.sortValidade.transform(dateConvertPipe));
       });
     return produtoResult.asObservable();

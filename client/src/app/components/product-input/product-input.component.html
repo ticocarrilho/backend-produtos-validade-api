@@ -1,4 +1,8 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+<form
+  class="mat-elevation-z1"
+  [formGroup]="form"
+  (ngSubmit)="onSubmit(form.value)"
+>
   <div fxLayout="row wrap" fxLayoutAlign="space-evenly none">
     <mat-form-field>
       <mat-label>Nome</mat-label>
@@ -14,7 +18,8 @@
       <mat-error *ngIf="precoFormControl.hasError('required')">
         Campo <strong>obrigatório</strong>.
       </mat-error>
-      <mat-hint>Valor mínimo: R$ 1,00</mat-hint>
+      <mat-error *ngIf="precoFormControl.value!==null && precoFormControl.hasError('min')"> Valor mínimo de <strong>R$ 1,00</strong></mat-error>
+      <mat-hint>Valor mínimo: <strong>R$ 1,00</strong></mat-hint>
     </mat-form-field>
 
     <mat-form-field>
@@ -28,10 +33,16 @@
       />
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
-      <mat-error *ngIf="validadeFormControl.hasError('required')">
+      <mat-error *ngIf="!validadeFormControl.hasError('matDatepickerParse') && validadeFormControl.hasError('required')">
         Campo <strong>obrigatório</strong>.
+      </mat-error>
+      <mat-error *ngIf="validadeFormControl.hasError('matDatepickerMin')">
+        A validade deve ser posterior a <strong>data de hoje</strong>.
+      </mat-error>
+      <mat-error *ngIf="validadeFormControl.hasError('matDatepickerParse')">
+        Insira um formato de data <strong>válido</strong>.
       </mat-error>
     </mat-form-field>
   </div>
-  <button mat-raised-button color="primary" type="submit">Adicionar</button>
+  <button mat-raised-button color="primary">Adicionar</button>
 </form>
