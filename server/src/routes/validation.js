@@ -16,7 +16,10 @@ module.exports = {
     body('validade')
       .notEmpty()
       .withMessage('A validade não pode estar vazia.')
-      .isDate()
+      .bail()
+      .custom(value => {
+        return moment(value).isValid();
+      })
       .withMessage('Insira um formato de data válido.')
       .bail()
       .custom(value => {
@@ -43,6 +46,7 @@ module.exports = {
       .optional()
       .notEmpty()
       .withMessage('A validade não pode estar vazia.')
+      .bail()
       .isDate()
       .withMessage('Insira um formato de data válido.')
       .bail()

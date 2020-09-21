@@ -1,0 +1,37 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+  <div fxLayout="row wrap" fxLayoutAlign="space-evenly none">
+    <mat-form-field>
+      <mat-label>Nome</mat-label>
+      <input matInput required [formControl]="nomeFormControl" />
+      <mat-error *ngIf="nomeFormControl.hasError('required')">
+        Campo <strong>obrigatório</strong>.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Preço</mat-label>
+      <input matInput currencyMask required [formControl]="precoFormControl" />
+      <mat-error *ngIf="precoFormControl.hasError('required')">
+        Campo <strong>obrigatório</strong>.
+      </mat-error>
+      <mat-hint>Valor mínimo: R$ 1,00</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input
+        matInput
+        [matDatepicker]="picker"
+        placeholder="Validade"
+        required
+        [formControl]="validadeFormControl"
+        [min]="minDate"
+      />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-error *ngIf="validadeFormControl.hasError('required')">
+        Campo <strong>obrigatório</strong>.
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <button mat-raised-button color="primary" type="submit">Adicionar</button>
+</form>

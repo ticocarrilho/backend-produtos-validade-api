@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import * as moment from 'moment-timezone';
 import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
@@ -13,16 +13,27 @@ import { ConvertDatePipe } from '../pipes/convert-date.pipe';
 })
 export class ProdutoService {
   private produtos = new BehaviorSubject<Produto[]>(null);
-  sharedProdutos = this.produtos.asObservable();
-  constructor(private http: HttpClient, private sortValidade: SortValidadePipe, private convertDate: ConvertDatePipe) {}
+  readonly sharedProdutos: Observable<Produto[]> = this.produtos.asObservable();
 
-  addProduto(produto: Produto): void {
+  constructor(
+    private http: HttpClient,
+    private sortValidade: SortValidadePipe,
+    private convertDate: ConvertDatePipe
+  ) {}
+
+  addProduto(produto: Produto): Observable<Produto> {
+    let produtoResult: Subject<Produto> = new Subject<Produto>();
     this.http
       .post<Produto>(environment.apiUrl, produto)
-      .subscribe((res: any) => {
-        const dateConvertPipe = this.convertDate.transform(this.produtos.getValue().concat(res.product))
-        this.produtos.next(this.sortValidade.transform(dateConvertPipe))
+      .subscribe((res: Produto) => {
+        produtoResult.next(res)
+        const newProdutos =  [...this.produtos.getValue(), res]
+        const dateConvertPipe = this.convertDate.transform(
+          newProdutos
+        );
+        this.produtos.next(this.sortValidade.transform(dateConvertPipe));
       });
+    return produtoResult.asObservable();
   }
 
   getProdutos(): Observable<Produto[]> {

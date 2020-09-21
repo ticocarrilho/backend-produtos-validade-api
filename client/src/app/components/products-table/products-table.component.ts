@@ -4,7 +4,7 @@ import { Produto } from '../../produto';
 import { faPen, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { ProdutoService } from 'src/app/services/produto.service';
+import { ProdutoService } from '../../services/produto.service';
 
 @Component({
   selector: 'app-products-table',
