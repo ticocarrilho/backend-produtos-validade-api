@@ -43,14 +43,13 @@ export class ProductInputComponent implements OnInit {
   }
 
   onSubmit(produtoInfo: Produto) {
-    console.log(this.validadeFormControl);
-    // let produto: Produto = produtoInfo;
-    // this.produtoService.addProduto(produto).subscribe((res: Produto) => {
-    //   this.formGroupDirective.resetForm();
-    //   this.snackBar.open('Produto criado com sucesso.', 'Desfazer', {
-    //     duration: 3000,
-    //   });
-    // });
+    let produto: Produto = produtoInfo;
+    this.produtoService.addProduto(produto).subscribe((res: Produto) => {
+      this.formGroupDirective.resetForm();
+      this.snackBar.open('Produto criado com sucesso.', 'Desfazer', {
+        duration: 3000,
+      });
+    });
   }
 
   ngOnInit(): void {}
