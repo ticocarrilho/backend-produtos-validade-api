@@ -37,7 +37,7 @@ export class ProductsTableComponent implements OnInit {
 
   deleteProduto(produto: Produto): void {
     const dialogRef = this.deleteDialog.open(DeleteProdDialogComponent, {
-      width: '250px',
+      width: '400px',
       data: produto
     })
     dialogRef.afterClosed().subscribe(result => {
