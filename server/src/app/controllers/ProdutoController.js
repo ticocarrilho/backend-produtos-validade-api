@@ -17,8 +17,11 @@ module.exports = {
   async store(req, res) {
     const { nome, preco, validade } = req.body;
     try {
-      const product = await Produto.create({ nome, preco, validade });
-      res.json({ product });
+      const { createdAt, updatedAt, ...product } = (
+        await Produto.create({ nome, preco, validade })
+      ).toJSON();
+
+      res.json({ ...product });
     } catch (error) {
       res
         .status(400)
