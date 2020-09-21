@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { ProdutoService } from '../../services/produto.service';
 import { DeleteProdDialogComponent } from '../delete-prod-dialog/delete-prod-dialog.component';
+import { EditProdDialogComponent } from '../edit-prod-dialog/edit-prod-dialog.component';
 
 @Component({
   selector: 'app-products-table',
@@ -23,7 +24,8 @@ export class ProductsTableComponent implements OnInit {
 
   constructor(
     private produtoService: ProdutoService,
-    public deleteDialog: MatDialog
+    public deleteDialog: MatDialog,
+    public editDialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -38,13 +40,20 @@ export class ProductsTableComponent implements OnInit {
   deleteProduto(produto: Produto): void {
     const dialogRef = this.deleteDialog.open(DeleteProdDialogComponent, {
       width: '400px',
-      data: produto
-    })
-    dialogRef.afterClosed().subscribe(result => {
-      if(result){
+      data: produto,
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
         this.produtoService.deleteProduto(produto);
       }
-    })
+    });
+  }
+
+  editProduto(produto: Produto): void {
+    this.deleteDialog.open(EditProdDialogComponent, {
+      width: '400px',
+      data: produto,
+    });
   }
 
   isExpired(produto: Produto): boolean {
