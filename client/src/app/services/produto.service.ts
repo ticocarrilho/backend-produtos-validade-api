@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import * as moment from 'moment-timezone';
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { Produto } from '../produto';
 import { SortValidadePipe } from '../pipes/sort-validade.pipe';
@@ -50,15 +50,18 @@ export class ProdutoService {
   }
 
   deleteProduto(produto: Produto): Observable<Produto[]> {
-    this.http
-      .delete<Produto>(`${environment.apiUrl}/${produto.id}`)
-      .subscribe(() => {
+    this.http.delete<Produto>(`${environment.apiUrl}/${produto.id}`).subscribe(
+      () => {
         this.produtos.next(
           this.produtos
             .getValue()
             .filter((prod: Produto) => prod.id !== produto.id)
         );
-      });
+      },
+      (err: HttpErrorResponse) => {
+        this.errorHandlerAlert(err);
+      }
+    );
     return this.sharedProdutos;
   }
 
@@ -66,19 +69,24 @@ export class ProdutoService {
     let alteredProduct: Subject<Produto> = new Subject<Produto>();
     this.http
       .put<Produto>(`${environment.apiUrl}/${produto.id}`, produto)
-      .subscribe((res: Produto) => {
-        alteredProduct.next(res);
-        const alteredProdutos = this.produtos
-          .getValue()
-          .map((prod: Produto) => {
-            if (prod.id === produto.id) {
-              prod = produto;
-            }
-            return prod;
-          });
-        const dateConvertPipe = this.convertDate.transform(alteredProdutos);
-        this.produtos.next(this.sortValidade.transform(dateConvertPipe));
-      });
+      .subscribe(
+        (res: Produto) => {
+          alteredProduct.next(res);
+          const alteredProdutos = this.produtos
+            .getValue()
+            .map((prod: Produto) => {
+              if (prod.id === produto.id) {
+                prod = produto;
+              }
+              return prod;
+            });
+          const dateConvertPipe = this.convertDate.transform(alteredProdutos);
+          this.produtos.next(this.sortValidade.transform(dateConvertPipe));
+        },
+        (err: HttpErrorResponse) => {
+          this.errorHandlerAlert(err);
+        }
+      );
     return alteredProduct.asObservable();
   }
 
@@ -102,9 +110,14 @@ export class ProdutoService {
           )
         )
       )
-      .subscribe((res) => {
-        this.produtos.next(res);
-      });
+      .subscribe(
+        (res) => {
+          this.produtos.next(res);
+        },
+        (err: HttpErrorResponse) => {
+          this.errorHandlerAlert(err);
+        }
+      );
     return this.sharedProdutos;
   }
 }
