@@ -35,6 +35,7 @@ import { ProductInputComponent } from './components/product-input/product-input.
 import { DeleteProdDialogComponent } from './components/delete-prod-dialog/delete-prod-dialog.component';
 import { getPortuguesePaginatorIntl } from './getPortuguesePaginatorIntl';
 import { EditProdDialogComponent } from './components/edit-prod-dialog/edit-prod-dialog.component';
+import { ErrorAlertComponent } from './components/error-alert/error-alert.component';
 
 registerLocaleData(localePt);
 
@@ -57,6 +58,7 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
     ProductInputComponent,
     DeleteProdDialogComponent,
     EditProdDialogComponent,
+    ErrorAlertComponent,
   ],
   imports: [
     BrowserModule,

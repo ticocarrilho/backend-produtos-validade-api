@@ -20,11 +20,10 @@ module.exports = {
       const { createdAt, updatedAt, ...product } = (
         await Produto.create({ nome, preco, validade })
       ).toJSON();
-
       res.json({ ...product });
     } catch (error) {
       res
-        .status(400)
+        .status(500)
         .json({ message: 'Não foi possível adicionar o produto.' });
     }
   },
@@ -39,7 +38,7 @@ module.exports = {
       const { createdAt, updatedAt, ...newProduct } = product.toJSON();
       res.json({ ...newProduct });
     } catch (error) {
-      res.status(400).json({ message: 'Não foi possível editar o produto.' });
+      res.status(500).json({ message: 'Não foi possível editar o produto.' });
     }
   },
   async delete(req, res) {
@@ -52,7 +51,7 @@ module.exports = {
       await product.destroy();
       res.json({ message: 'Produto excluído com sucesso.' });
     } catch (error) {
-      res.status(400).json({ message: 'Não foi possível excluir o produto.' });
+      res.status(500).json({ message: 'Não foi possível excluir o produto.' });
     }
   },
 };
