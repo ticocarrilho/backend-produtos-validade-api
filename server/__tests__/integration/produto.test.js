@@ -74,24 +74,24 @@ describe('PUT /api/produtos', () => {
     const product = await factory.create('Produto');
     const nome = 'Ketchup';
     const response = await request(app)
-      .patch(`/api/produtos/${product.id}`)
-      .send({ nome });
+      .put(`/api/produtos/${product.id}`)
+      .send({ ...product, nome });
     expect(response.status).toBe(200);
   });
 
   it('should return 404 when trying to update a product that does not exists', async () => {
     const product = await factory.create('Produto');
     const response = await request(app)
-      .patch(`/api/produtos/${product.id + 1}`)
-      .send({ nome: 'Ketchup' });
+      .put(`/api/produtos/${product.id + 1}`)
+      .send({ ...product, nome: 'Ketchup' });
     expect(response.status).toBe(404);
   });
 
   it('should return 400 when trying to update a product without a required field', async () => {
     const product = await factory.create('Produto');
     const response = await request(app)
-      .patch(`/api/produtos/${product.id}`)
-      .send({ nome: '' });
+      .put(`/api/produtos/${product.id}`)
+      .send({ ...product, nome: '' });
     expect(response.status).toBe(400);
   });
 
@@ -99,15 +99,15 @@ describe('PUT /api/produtos', () => {
     const product = await factory.create('Produto');
     const date = new Date(1989, 10, 2);
     const response = await request(app)
-      .patch(`/api/produtos/${product.id}`)
-      .send({ validade: date.toString() });
+      .put(`/api/produtos/${product.id}`)
+      .send({ ...product, validade: date.toString() });
     expect(response.status).toBe(400);
   });
 
   it('should return 400 when trying to update a product with price less than 1', async () => {
     const product = await factory.create('Produto');
     const response = await request(app)
-      .patch(`/api/produtos/${product.id}`)
+      .put(`/api/produtos/${product.id}`)
       .send({ ...produtoInfo, preco: 0 });
     expect(response.status).toBe(400);
   });

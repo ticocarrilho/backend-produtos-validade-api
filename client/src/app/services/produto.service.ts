@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import * as moment from 'moment-timezone';
 import { map } from 'rxjs/operators';
@@ -7,6 +7,7 @@ import { environment } from '../../environments/environment';
 import { Produto } from '../produto';
 import { SortValidadePipe } from '../pipes/sort-validade.pipe';
 import { ConvertDatePipe } from '../pipes/convert-date.pipe';
+import { ErrorAlertService } from './error-alert.service';
 
 @Injectable({
   providedIn: 'root',
@@ -18,19 +19,33 @@ export class ProdutoService {
   constructor(
     private http: HttpClient,
     private sortValidade: SortValidadePipe,
-    private convertDate: ConvertDatePipe
+    private convertDate: ConvertDatePipe,
+    private errorService: ErrorAlertService
   ) {}
+
+  errorHandlerAlert(err: HttpErrorResponse) {
+    if (err.status === 400) {
+      const { errors } = err.error;
+      const errorsMsg: string[] = errors.map((error) => error.msg);
+      this.errorService.showErrorDialog(errorsMsg);
+    } else {
+      this.errorService.showErrorDialog(Array.of(err.error.message));
+    }
+  }
 
   addProduto(produto: Produto): Observable<Produto> {
     let produtoResult: Subject<Produto> = new Subject<Produto>();
-    this.http
-      .post<Produto>(environment.apiUrl, produto)
-      .subscribe((res: Produto) => {
+    this.http.post<Produto>(environment.apiUrl, produto).subscribe(
+      (res: Produto) => {
         produtoResult.next(res);
         const newProdutos = [...this.produtos.getValue(), res];
         const dateConvertPipe = this.convertDate.transform(newProdutos);
         this.produtos.next(this.sortValidade.transform(dateConvertPipe));
-      });
+      },
+      (err: HttpErrorResponse) => {
+        this.errorHandlerAlert(err);
+      }
+    );
     return produtoResult.asObservable();
   }
 
