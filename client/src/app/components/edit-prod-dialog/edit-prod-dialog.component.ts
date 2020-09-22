@@ -31,6 +31,7 @@ export class EditProdDialogComponent {
 
   onSubmit = (produto: Produto) => {
     Object.assign(produto, { id: this.data.id })
+    console.log(produto);
     this.produtoService.editProduto(produto).subscribe(() => {
       this.dialogRef.close()
       this.snackBarService.showSnackBar(
