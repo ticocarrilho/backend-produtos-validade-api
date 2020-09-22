@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "create-db": "sequelize db:create",
-    "prestart": "npm run create-db && sequelize db:migrate",
+    "prestart": "sequelize db:migrate",
     "start": "node server",
     "predev": "npm run create-db",
     "dev": "NODE_ENV=development nodemon server --ignore ./server/__tests__",
