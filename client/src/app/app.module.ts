@@ -34,6 +34,7 @@ import { ConvertDatePipe } from './pipes/convert-date.pipe';
 import { ProductInputComponent } from './components/product-input/product-input.component';
 import { DeleteProdDialogComponent } from './components/delete-prod-dialog/delete-prod-dialog.component';
 import { getPortuguesePaginatorIntl } from './getPortuguesePaginatorIntl';
+import { EditProdDialogComponent } from './components/edit-prod-dialog/edit-prod-dialog.component';
 
 registerLocaleData(localePt);
 
@@ -55,6 +56,7 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
     ConvertDatePipe,
     ProductInputComponent,
     DeleteProdDialogComponent,
+    EditProdDialogComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Editar</h1>
+<div mat-dialog-content>
+  <app-product-input [onSubmit]="onSubmit" [isInDialog]="true" [defaultProdValue]="data"></app-product-input>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-button [mat-dialog-close]="true" (click)="onSubmitClick()" cdkFocusInitial>Salvar</button>
+</div>

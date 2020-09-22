@@ -2,8 +2,8 @@ const { Produto } = require('../models');
 
 module.exports = {
   async index(req, res) {
-    const products = await Produto.findAll();
-    return res.json(products);
+    const products = await Produto.findAll({ raw: true });
+    return res.json(products.map(({ createdAt, updatedAt, ...product}) => product));
   },
   async show(req, res) {
     const { productId } = req.params;
@@ -36,7 +36,8 @@ module.exports = {
     }
     try {
       await product.update(req.body);
-      res.json({ message: 'Produto editado com sucesso.' });
+      const { createdAt, updatedAt, ...newProduct } = product.toJSON();
+      res.json({ ...newProduct });
     } catch (error) {
       res.status(400).json({ message: 'Não foi possível editar o produto.' });
     }

@@ -38,9 +38,33 @@ export class ProdutoService {
     this.http
       .delete<Produto>(`${environment.apiUrl}/${produto.id}`)
       .subscribe(() => {
-        this.produtos.next(this.produtos.getValue().filter((prod: Produto) => prod.id !== produto.id))
+        this.produtos.next(
+          this.produtos
+            .getValue()
+            .filter((prod: Produto) => prod.id !== produto.id)
+        );
       });
     return this.sharedProdutos;
+  }
+
+  editProduto(produto: Produto): Observable<Produto> {
+    let alteredProduct: Subject<Produto> = new Subject<Produto>();
+    this.http
+      .put<Produto>(`${environment.apiUrl}/${produto.id}`, produto)
+      .subscribe((res: Produto) => {
+        alteredProduct.next(res);
+        const alteredProdutos = this.produtos
+          .getValue()
+          .map((prod: Produto) => {
+            if (prod.id === produto.id) {
+              prod = produto;
+            }
+            return prod;
+          });
+        const dateConvertPipe = this.convertDate.transform(alteredProdutos);
+        this.produtos.next(this.sortValidade.transform(dateConvertPipe));
+      });
+    return alteredProduct.asObservable();
   }
 
   getProdutos(): Observable<Produto[]> {

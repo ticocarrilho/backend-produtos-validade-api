@@ -1,9 +1,9 @@
 <form
-  class="mat-elevation-z1"
   [formGroup]="form"
-  (ngSubmit)="onSubmit(form.value)"
+  [ngClass]="{ 'mat-elevation-z1' : !isInDialog }"
+  (ngSubmit)="form.valid && onSubmit(form.value)"
 >
-  <div fxLayout="row wrap" fxLayoutAlign="space-evenly none">
+  <div fxLayout="{{isInDialog ? 'column': 'row wrap'}}" fxLayoutAlign="space-evenly none">
     <mat-form-field>
       <mat-label>Nome</mat-label>
       <input matInput required [formControl]="nomeFormControl" />
@@ -14,7 +14,7 @@
 
     <mat-form-field>
       <mat-label>Preço</mat-label>
-      <input matInput currencyMask required [formControl]="precoFormControl" />
+      <input matInput currencyMask required [formControl]="precoFormControl"/>
       <mat-error *ngIf="precoFormControl.hasError('required')">
         Campo <strong>obrigatório</strong>.
       </mat-error>
@@ -44,5 +44,5 @@
       </mat-error>
     </mat-form-field>
   </div>
-  <button mat-raised-button color="primary">Adicionar</button>
+  <button mat-raised-button color="primary" *ngIf="!isInDialog">Adicionar</button>
 </form>

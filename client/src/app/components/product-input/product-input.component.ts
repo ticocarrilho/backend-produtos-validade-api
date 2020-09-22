@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -6,9 +6,8 @@ import {
   Validators,
   FormGroupDirective,
 } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { FormService } from '../../services/form.service';
 import { Produto } from '../../produto';
-import { ProdutoService } from '../../services/produto.service';
 
 @Component({
   selector: 'app-product-input',
@@ -16,11 +15,13 @@ import { ProdutoService } from '../../services/produto.service';
   styleUrls: ['./product-input.component.scss'],
 })
 export class ProductInputComponent implements OnInit {
+  @Input() isInDialog?: Boolean;
+  @Input() defaultProdValue?: Produto;
   form: FormGroup;
+  @Input() onSubmit;
   minDate: Date;
   @ViewChild(FormGroupDirective) formGroupDirective: FormGroupDirective;
   nomeFormControl = new FormControl('', [Validators.required]);
-
   precoFormControl = new FormControl(null, [
     Validators.required,
     Validators.min(1.0),
@@ -30,8 +31,7 @@ export class ProductInputComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private produtoService: ProdutoService,
-    private snackBar: MatSnackBar
+    private formService: FormService
   ) {
     this.minDate = new Date();
     this.minDate.setDate(this.minDate.getDate() + 1);
@@ -42,21 +42,18 @@ export class ProductInputComponent implements OnInit {
     });
   }
 
-  onSubmit(produto: Produto) {
-    this.produtoService.addProduto(produto).subscribe((res: Produto) => {
-      this.formGroupDirective.resetForm();
-      const snackBarRef = this.snackBar.open(
-        'Produto criado com sucesso.',
-        'Desfazer',
-        {
-          duration: 3000,
+  ngOnInit(): void {
+    if (this.isInDialog) {
+      this.formService.onFormSubmitted.subscribe((res: String) => {
+        if (res === 'submit') {
+          this.onSubmit(this.form.value);
         }
-      );
-      snackBarRef.onAction().subscribe(() => {
-        this.produtoService.deleteProduto(res);
       });
-    });
+      this.form.patchValue({
+        nome: this.defaultProdValue.nome, 
+        preco: this.defaultProdValue.preco,
+        validade: this.defaultProdValue.validade
+      });
+    }
   }
-
-  ngOnInit(): void {}
 }

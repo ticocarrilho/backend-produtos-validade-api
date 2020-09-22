@@ -17,7 +17,7 @@ routes.post(
   returnValidation,
   ProdutosController.store
 );
-routes.patch(
+routes.put(
   '/api/produtos/:productId',
   requiredFieldsPatch,
   returnValidation,
