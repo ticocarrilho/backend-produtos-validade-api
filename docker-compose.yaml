@@ -1,0 +1,22 @@
+version: '3.0'
+
+services:
+ database:
+  image: mysql:5.7.31
+  ports:
+   - "3306:3306"
+  restart: always
+  env_file:
+   - .env
+
+ express: 
+  build: .
+  ports:
+  - "3000:3000"
+  links:
+  - database
+  restart: always
+  environment:
+      - NODE_ENV=production
+  env_file:
+   - .env

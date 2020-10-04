@@ -1,0 +1,28 @@
+version: '3.0'
+
+services:
+ angular:
+  build: client
+  ports:
+  - "4200:4200"
+  command: npm run dev
+
+ database:
+  image: mysql:5.7.31
+  ports:
+   - "3306:3306"
+  env_file:
+   - .env
+
+ express: 
+  build: server
+  ports:
+  - "3000:3000"
+  links:
+  - database
+  restart: on-failure
+  environment:
+      - NODE_ENV=development
+  env_file:
+   - .env
+  command: npm run dev

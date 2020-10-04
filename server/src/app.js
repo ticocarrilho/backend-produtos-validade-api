@@ -4,7 +4,7 @@ const path = require('path');
 const cors = require('cors');
 
 class AppController {
-  distPath = path.join(__dirname, '..', '..', 'dist');
+  distPath = path.join(__dirname, '..', 'dist');
   constructor() {
     this.express = express();
     this.middlewares();
@@ -27,7 +27,9 @@ class AppController {
 
   routes() {
     this.express.use(require('./routes'));
-    this.express.use(express.static(this.distPath));
+    if(process.env.NODE_ENV === 'production') {
+      this.express.use(express.static(this.distPath));
+    }
   }
 }
 
