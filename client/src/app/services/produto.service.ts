@@ -28,6 +28,9 @@ export class ProdutoService {
       const { errors } = err.error;
       const errorsMsg: string[] = errors.map((error) => error.msg);
       this.errorService.showErrorDialog(errorsMsg);
+    }
+    else if(err.status ===0) {
+      this.errorService.showErrorDialog(Array.of('Não foi possível conectar ao servidor.'))
     } else {
       this.errorService.showErrorDialog(Array.of(err.error.message));
     }
