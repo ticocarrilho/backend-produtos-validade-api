@@ -3,6 +3,7 @@ Deploy: [Produtos Validade API](https://angular-produtos.herokuapp.com/)
 ![](overview.gif)
 ### Stack Utilizada
 * [Node.JS](https://nodejs.org/)
+* [Docker](https://www.docker.com/)
 * [Express](https://expressjs.com/)
 * [Sequelize](https://sequelize.org/)
 * [MySQL](https://www.mysql.com/)
@@ -15,18 +16,13 @@ Deploy: [Produtos Validade API](https://angular-produtos.herokuapp.com/)
 Para executar é necessário ter o MySQL instalado.
 Crie um arquivo *.env* no diretório raiz do projeto com o conteúdo:
 ```
-DB_USER=Usuário do MySQL
-DB_PASS=Senha do MySQL
+MYSQL_ROOT_PASSWORD=Senha do MySQL
 DB_NAME=Nome do banco de dados
-DB_HOST=Endereço de IP do banco de dados (localhost ou 127.0.0.1 caso esteja na máquina local)
 ```
 
-Depois de configurado o arquivo *.env* instale as dependências do projeto e execute o script *dev* para iniciar o servidor Node back-end.
-Execute o *ng serve* para iniciar o front-end Angular.
+Depois de configurado o arquivo *.env*, inicie os serviços do *docker-compose.dev.yaml* com o Docker Compose.
 
-#### NPM
+#### Docker Compose
 ```sh
-$ npm i
-$ npm run dev
-$ ng serve
+$ docker-compose -f "docker-compose.dev.yaml" up -d --build
 ```
