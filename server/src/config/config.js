@@ -2,10 +2,10 @@ require('dotenv').config();
 
 module.exports = {
   development: {
-    username: process.env.DB_USER,
-    password: process.env.DB_PASS,
+    username: 'root',
+    password: process.env.MYSQL_ROOT_PASSWORD,
     database: process.env.DB_NAME,
-    host: process.env.DB_HOST,
+    host: 'database',
     dialect: 'mysql',
     logging: false,
     define: {
@@ -14,7 +14,7 @@ module.exports = {
     }
   },
   test: {
-    storage: './server/__tests__/database.sqlite',
+    storage: './__tests__/database.sqlite',
     dialect: 'sqlite',
     logging: false,
     define: {
@@ -23,8 +23,9 @@ module.exports = {
     },
   },
   production: {
-    use_env_variable: 'DATABASE_URL',
-    dialect: 'postgres',
+    use_env_variable: 'CLEARDB_DATABASE_URL',
+    database: process.env.DB_NAME,
+    dialect: 'mysql',
     logging: false,
     define: {
       timestamps: true,
