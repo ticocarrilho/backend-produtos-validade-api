@@ -11,7 +11,7 @@ module.exports = {
     define: {
       timestamps: true,
       underscored: true,
-    }
+    },
   },
   test: {
     storage: './__tests__/database.sqlite',
@@ -30,12 +30,6 @@ module.exports = {
     define: {
       timestamps: true,
       underscored: true,
-    },
-    dialectOptions: {
-      ssl: {
-        require: true,
-        rejectUnauthorized: false,
-      },
     },
   },
 };
