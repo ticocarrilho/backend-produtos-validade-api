@@ -4,7 +4,7 @@ const path = require('path');
 const cors = require('cors');
 
 class AppController {
-  distPath = path.join(__dirname, '...', 'dist');
+  distPath = path.join(__dirname, '..', 'dist');
   constructor() {
     this.express = express();
     this.middlewares();
