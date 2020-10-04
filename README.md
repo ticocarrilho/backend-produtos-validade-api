@@ -13,10 +13,10 @@ Deploy: [Produtos Validade API](https://angular-produtos.herokuapp.com/)
 * [Material UI Angular](https://material.angular.io//)
 ### Como executar
 
-Para executar é necessário ter o MySQL instalado.
+Para executar é necessário ter o Docker instalado.
 Crie um arquivo *.env* no diretório raiz do projeto com o conteúdo:
 ```
-MYSQL_ROOT_PASSWORD=Senha do MySQL
+MYSQL_ROOT_PASSWORD=Senha do container MySQL
 DB_NAME=Nome do banco de dados
 ```
 
