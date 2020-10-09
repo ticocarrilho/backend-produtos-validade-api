@@ -10,4 +10,5 @@ COPY /server .
 COPY --from=client /client/dist ./dist
 RUN npm i
 EXPOSE 3000
+ENV NODE_ENV=production
 CMD ["npm", "start"]
